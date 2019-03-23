@@ -25,8 +25,7 @@ if (!require(openxlsx)) {install.packages("openxlsx"); library(openxlsx)}
 if (!require(gmodels)) {install.packages("gmodels"); library(gmodels)}
 
 # set to your correct working directory  
-setwd("~/Documents/class/marketing analytics/cases/ford ka/data") # !!! change this line !!!
-
+setwd("C:/Users/pwpro/git/CMU_Projects/Marketing_Analytics") # !!! change this line !!!
 
 
 ###############################################################################
@@ -201,7 +200,7 @@ points(kclust,bss/(wss+bss))
 set.seed(1248765792)
 
 # set the value of k
-k=3  # !!! change this value to 2, 3, ... !!!
+k=6  # !!! change this value to 2, 3, ... !!!
 
 # compute a k-means cluster with specified k using just the psychographics
 (grpA=kmeans(xford[,qlist],centers=k))
@@ -237,6 +236,8 @@ CrossTable(ford$PreferenceGroup,grpA$cluster)   # slightly nicer cross tabulatio
 # here is a more visualize representation of a table with a BalloonPlot (uncomment the line if you want to see it)
 par(mfrow=c(1,1))  # reset graphics to one panel
 balloonplot(table(ford$PreferenceGroup,grpA$cluster),xlab="PreferenceGroup",ylab="Cluster")
+
+
 
 # summarize the centroids
 grpAcenter=t(grpA$centers)   # create variable with the transpose of the centroids
@@ -343,7 +344,7 @@ points(kclust,bssB/(wssB+bssB))
 set.seed(1248765792)
 
 # compute a k-means cluster with specified number of k using just the demographics
-k=3  # !!! change from 3 to whatever value you decide !!!
+k=6  # !!! change from 3 to whatever value you decide !!!
 (grpB=kmeans(xford[,dlist],centers=k))
 
 # plot the solutions against the Age and NumberChildren
@@ -383,5 +384,5 @@ write.xlsx(list(grpB$centers,grpB$cluster),file="FordKa_ResultsB.xlsx",colnames=
 # compare the cluster solutions with the each other
 xtabs(~grpA$cluster+grpB$cluster)
 # here is a more visualize representation of a table with a BalloonPlot
-balloonplot(table(grpA$cluster,grpB$cluster),xlab="Demo Cluster",ylab="Psych Cluster")
+balloonplot(table(grpA$cluster,grpB$cluster),xlab="Psych Cluster",ylab="Demo Cluster")
 

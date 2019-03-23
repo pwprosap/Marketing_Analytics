@@ -1,0 +1,159 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r fig.width=10, fig.height=10}
+# set the random number seed so the samples will be the same if regenerated
+set.seed(1248765792)
+
+# set the value of k
+k=3  # !!! change this value to 2, 3, ... !!!
+
+# compute a k-means cluster with specified k using just the psychographics
+(grpA=kmeans(xford[,qlist],centers=k))
+
+# plot the solutions against the Q1 and Q2
+# since the data is categorical most of the plots will overlay one another,
+# so instead we jitter the points -- which adds a small random number to each
+par(mfrow=c(1,1),mar=c(5,4,4,1)+.1)
+plot(jitter(xford[,"Q1"]), jitter(xford[,"Q2"]),xlab=fordquest[1],ylab=fordquest[2],col=grpA$cluster)
+points(grpA$centers[,c("Q1","Q2")],col=1:k,pch=8,cex=2)
+legend("topleft",pch=8,bty="n",col=1:k,as.character(1:k))
+
+# let's do a pairwise plot with the short list of questions
+par(mfrow=c(length(shortqlist),length(shortqlist)),mar=c(4.5,4.5,0,0))
+for (j in 1:length(shortqlist)) {
+  for (i in 1:length(shortqlist)) {
+    plot(jitter(xford[,shortqlist[i]]),jitter(xford[,shortqlist[j]]),
+         xlab=shortqlist[i],ylab=shortqlist[j],col=grpA$cluster)
+    points(grpA$centers[,c(shortqlist[i],shortqlist[j])],col=1:5,pch=8,cex=2)
+    if (i==j) legend("topleft",pch=8,bty="n",col=1:k,as.character(1:k))
+  }
+}
+
+# list out the short list of questions
+fordquest[nshortqlist]
+
+# compare the cluster solutions with the PreferenceGroup
+# preference group #1 are "Ka Chooser (top 3)"
+#                  #2 are Ka Non-Chooser (bottom 3)"
+#                  #3 is "Middle (Middle 4)"
+xtabs(~ford$PreferenceGroup+grpA$cluster)
+CrossTable(ford$PreferenceGroup,grpA$cluster)   # slightly nicer cross tabulation
+# here is a more visualize representation of a table with a BalloonPlot (uncomment the line if you want to see it)
+par(mfrow=c(1,1))  # reset graphics to one panel
+balloonplot(table(ford$PreferenceGroup,grpA$cluster),xlab="PreferenceGroup",ylab="Cluster")
+```
+
+```{r fig.width=10, fig.height=10}
+# set the random number seed so the samples will be the same if regenerated
+set.seed(1248765792)
+
+# set the value of k
+k=4  # !!! change this value to 2, 3, ... !!!
+
+# compute a k-means cluster with specified k using just the psychographics
+(grpA=kmeans(xford[,qlist],centers=k))
+
+# plot the solutions against the Q1 and Q2
+# since the data is categorical most of the plots will overlay one another,
+# so instead we jitter the points -- which adds a small random number to each
+par(mfrow=c(1,1),mar=c(5,4,4,1)+.1)
+plot(jitter(xford[,"Q1"]), jitter(xford[,"Q2"]),xlab=fordquest[1],ylab=fordquest[2],col=grpA$cluster)
+points(grpA$centers[,c("Q1","Q2")],col=1:k,pch=8,cex=2)
+legend("topleft",pch=8,bty="n",col=1:k,as.character(1:k))
+
+# let's do a pairwise plot with the short list of questions
+par(mfrow=c(length(shortqlist),length(shortqlist)),mar=c(4.5,4.5,0,0))
+for (j in 1:length(shortqlist)) {
+  for (i in 1:length(shortqlist)) {
+    plot(jitter(xford[,shortqlist[i]]),jitter(xford[,shortqlist[j]]),
+         xlab=shortqlist[i],ylab=shortqlist[j],col=grpA$cluster)
+    points(grpA$centers[,c(shortqlist[i],shortqlist[j])],col=1:5,pch=8,cex=2)
+    if (i==j) legend("topleft",pch=8,bty="n",col=1:k,as.character(1:k))
+  }
+}
+
+# list out the short list of questions
+fordquest[nshortqlist]
+
+# compare the cluster solutions with the PreferenceGroup
+# preference group #1 are "Ka Chooser (top 3)"
+#                  #2 are Ka Non-Chooser (bottom 3)"
+#                  #3 is "Middle (Middle 4)"
+xtabs(~ford$PreferenceGroup+grpA$cluster)
+CrossTable(ford$PreferenceGroup,grpA$cluster)   # slightly nicer cross tabulation
+# here is a more visualize representation of a table with a BalloonPlot (uncomment the line if you want to see it)
+par(mfrow=c(1,1))  # reset graphics to one panel
+balloonplot(table(ford$PreferenceGroup,grpA$cluster),xlab="PreferenceGroup",ylab="Cluster")
+```
+
+
+```{r}
+# set the random number seed so the samples will be the same if regenerated
+set.seed(1248765792)
+
+# set the value of k
+k=2  # !!! change this value to 2, 3, ... !!!
+
+# compute a k-means cluster with specified k using just the psychographics
+(grpA=kmeans(xford[,qlist],centers=k))
+
+# plot the solutions against the Q1 and Q2
+# since the data is categorical most of the plots will overlay one another,
+# so instead we jitter the points -- which adds a small random number to each
+par(mfrow=c(1,1),mar=c(5,4,4,1)+.1)
+plot(jitter(xford[,"Q1"]), jitter(xford[,"Q2"]),xlab=fordquest[1],ylab=fordquest[2],col=grpA$cluster)
+points(grpA$centers[,c("Q1","Q2")],col=1:k,pch=8,cex=2)
+legend("topleft",pch=8,bty="n",col=1:k,as.character(1:k))
+
+# let's do a pairwise plot with the short list of questions
+par(mfrow=c(length(shortqlist),length(shortqlist)),mar=c(4.5,4.5,0,0))
+for (j in 1:length(shortqlist)) {
+  for (i in 1:length(shortqlist)) {
+    plot(jitter(xford[,shortqlist[i]]),jitter(xford[,shortqlist[j]]),
+         xlab=shortqlist[i],ylab=shortqlist[j],col=grpA$cluster)
+    points(grpA$centers[,c(shortqlist[i],shortqlist[j])],col=1:5,pch=8,cex=2)
+    if (i==j) legend("topleft",pch=8,bty="n",col=1:k,as.character(1:k))
+  }
+}
+
+# list out the short list of questions
+fordquest[nshortqlist]
+
+# compare the cluster solutions with the PreferenceGroup
+# preference group #1 are "Ka Chooser (top 3)"
+#                  #2 are Ka Non-Chooser (bottom 3)"
+#                  #3 is "Middle (Middle 4)"
+xtabs(~ford$PreferenceGroup+grpA$cluster)
+CrossTable(ford$PreferenceGroup,grpA$cluster)   # slightly nicer cross tabulation
+# here is a more visualize representation of a table with a BalloonPlot (uncomment the line if you want to see it)
+par(mfrow=c(1,1))  # reset graphics to one panel
+balloonplot(table(ford$PreferenceGroup,grpA$cluster),xlab="PreferenceGroup",ylab="Cluster")
+```
+
+```{r}
+# set the random number seed so the samples will be the same if regenerated
+set.seed(1248765792)
+
+# compute a k-means cluster with specified number of k using just the demographics
+k=4  # !!! change from 3 to whatever value you decide !!!
+(grpB=kmeans(xford[,dlist],centers=k))
+
+# plot the solutions against the Age and NumberChildren
+# since the data is categorical most of the plots will overlay one another,
+# so instead we jitter the points -- which adds a small random number to each
+par(mfrow=c(1,1),mar=c(5,4,4,1)+.1)
+plot(xford[,"Age"],xford[,"NumberChildren"],xlab="Age",ylab="NumberChildren",col=grpB$cluster)
+points(grpB$centers[,c("Age","NumberChildren")],col=1:k,pch=8,cex=2)
+legend("topright",pch=8,bty="n",col=1:k,as.character(1:k))
+
+# compare the cluster solutions with the PreferenceGroup
+xtabs(~ford$PreferenceGroup+grpB$cluster)
+CrossTable(ford$PreferenceGroup,grpB$cluster)   # slightly nicer cross tabulation
+# here is a more visualize representation of a table with a BalloonPlot
+balloonplot(table(ford$PreferenceGroup,grpB$cluster),xlab="PreferenceGroup",ylab="Cluster")
+```
+
